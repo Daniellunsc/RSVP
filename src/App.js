@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import Header from './Components/Header'
 import Guestlist from './Components/GuestList.js';
+import Counter from './Components/Counter'
 
 class App extends Component {
 
@@ -95,25 +97,27 @@ class App extends Component {
     })
   }
 
-  getTotalInvite = () => this.state.guests.length;
-  // getConfirmedGuests = () =>
+  getTotalInvited = () => this.state.guests.length;
+
+  getConfirmedGuests = () => {
+    return this.state.guests.reduce(
+      (total, guest) => guest.isConfirmed ? total+=1 : total, 0)
+    }
   // getUnconfirmedGuests = () =>
 
   render() {
+    
+    const totalInvited = this.getTotalInvited();
+    const numberAttending = this.getConfirmedGuests();
+    console.log(numberAttending)
+    const numberUnconfirmed = totalInvited - numberAttending;
+
     return (
       <div className="App">
-      <header>
-        <h1>RSVP</h1>
-        <p>A Treehouse App</p>
-        <form onSubmit={this.newGuestSubmitHandler}>
-            <input 
-            type="text" 
-            onChange={this.handleNameInput}
-            value={this.state.pendingGuest}
-            placeholder="Invite Someone"/>
-            <button type="submit" name="submit" value="submit" >Submit</button>
-        </form>
-      </header>
+      <Header 
+      newGuestSubmitHandler={this.newGuestSubmitHandler}
+      pendingGuest={this.state.pendingGuest}
+      handleNameInput={this.handleNameInput}/>
       <div className="main">
         <div>
           <h2>Invitees</h2>
@@ -125,22 +129,7 @@ class App extends Component {
             /> Hide those who haven't responded
           </label>
         </div>
-        <table className="counter">
-          <tbody>
-            <tr>
-              <td>Attending:</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td>Unconfirmed:</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>Total:</td>
-              <td>3</td>
-            </tr>
-          </tbody>
-        </table>
+        <Counter totalInvited={totalInvited} numberAttending={numberAttending} numberUnconfirmed={numberUnconfirmed}></Counter>
         <Guestlist guests= {this.state.guests} 
         toggleConfirmationAt={this.toggleConfirmationAt}
         toggleEditingAt={this.toggleEditingAt}
