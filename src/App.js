@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './Components/Header'
-import Guestlist from './Components/GuestList.js';
-import Counter from './Components/Counter'
-
+import MainComponent from './Components/MainContent'
 class App extends Component {
 
   state = {
@@ -106,7 +104,6 @@ class App extends Component {
   // getUnconfirmedGuests = () =>
 
   render() {
-    
     const totalInvited = this.getTotalInvited();
     const numberAttending = this.getConfirmedGuests();
     console.log(numberAttending)
@@ -118,27 +115,20 @@ class App extends Component {
       newGuestSubmitHandler={this.newGuestSubmitHandler}
       pendingGuest={this.state.pendingGuest}
       handleNameInput={this.handleNameInput}/>
-      <div className="main">
-        <div>
-          <h2>Invitees</h2>
-          <label>
-            <input
-             type="checkbox" 
-             onChange={this.toggleFilter} 
-             checked={this.state.isFiltered}
-            /> Hide those who haven't responded
-          </label>
-        </div>
-        <Counter totalInvited={totalInvited} numberAttending={numberAttending} numberUnconfirmed={numberUnconfirmed}></Counter>
-        <Guestlist guests= {this.state.guests} 
+      <MainComponent 
+        toggleFilter={this.toggleFilter}
+        isFiltered={this.state.isFiltered}
+        numberAttending={numberAttending}
+        numberUnconfirmed={numberUnconfirmed}
+        totalInvited={totalInvited}
+        guests= {this.state.guests} 
         toggleConfirmationAt={this.toggleConfirmationAt}
         toggleEditingAt={this.toggleEditingAt}
         setNameAt={this.setNameAt}
-        isFiltered={this.state.isFiltered}
+        GuestisFiltered={this.state.isFiltered}
         onRemove={this.removeGuestAt}
         pendingGuest = {this.state.pendingGuest}
         />
-      </div>
     </div>
     );
   }
