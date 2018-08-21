@@ -5,7 +5,7 @@ import GuestInputForm from './GuestInputForm';
 const Header = props => 
     <header>
     <h1>RSVP</h1>
-    <p>A Treehouse App</p>
+    <p>A Daniel Luna App</p>
     <GuestInputForm 
     newGuestSubmitHandler={props.newGuestSubmitHandler}
     pendingGuest={props.pendingGuest}
